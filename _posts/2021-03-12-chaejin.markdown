@@ -1,0 +1,6 @@
+---
+layout: post
+title:  chaejin
+date:   2021-03-12 15:56:51 +0900
+categories: jekyll update
+---
