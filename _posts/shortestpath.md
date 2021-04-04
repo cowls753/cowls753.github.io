@@ -1,3 +1,9 @@
+---
+layout: single
+title:  shortestpath
+date:   2021-04-05
+categories: assignment
+---
 ```import java.util.Scanner;
 
 class graph {
