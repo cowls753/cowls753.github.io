@@ -4,7 +4,7 @@
 
 ![1](https://user-images.githubusercontent.com/80511210/116246007-84d5a080-a7a4-11eb-8c96-52ac57e243c6.png)     
 두 행렬 **A**, **B**의 곱인 행렬 **C**는 다음과 같이 나타난다.     
-![2](https://user-images.githubusercontent.com/80511210/116245988-82734680-a7a4-11eb-9fd2-aec66a629f1d.png)    
+![2](https://user-images.githubusercontent.com/80511210/116247169-8bb0e300-a7a5-11eb-8c0c-333ea2198dab.png)    
    
 ![3](https://user-images.githubusercontent.com/80511210/116245996-830bdd00-a7a4-11eb-907a-cdca5d0f9da5.png)    
 2×2 행렬의 곱을 구하기 위해서 총 8번의 곱셈과 4번의 덧셈이 수행되는 것을 알 수 있다.    
