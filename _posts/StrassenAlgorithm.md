@@ -98,31 +98,29 @@ public static int[][] sum(int[][] A, int[][] B, int n) {      //두 행렬을 �
 4. `sum`메소와 `sub`메소드를 이용해 **M1**~**M7**로부터 **C₁,₁**, **C₁,₂**, **C₂,₁**, **C₂,₂**을 얻고 이를 합쳐 두 행렬의 곱 **C**를 구한다.
 ``` java
 public static void merge(int[][] C, int n) {
-        if(n>2) {
-            int[][] C11, C12, C21, C22;
+        int[][] C11, C12, C21, C22;
 
-            C11 = sum(sum(M1, M4, n/2), sub(M7, M5, n/2), n/2);    //C11=M1+M4-M5+M7
-            C12 = sum(M3, M5, n/2);                                      //C12=M3+M5
-            C21 = sum(M2, M4, n/2);                                      //C21=M2+M4
-            C22 = sum(sub(M1, M2, n/2), sum(M3, M6, n/2),n/2);     //C22=M1-M2+M3+M6
+        C11 = sum(sum(M1, M4, n/2), sub(M7, M5, n/2), n/2);    //C11=M1+M4-M5+M7
+        C12 = sum(M3, M5, n/2);                                      //C12=M3+M5
+        C21 = sum(M2, M4, n/2);                                      //C21=M2+M4
+        C22 = sum(sub(M1, M2, n/2), sum(M3, M6, n/2),n/2);     //C22=M1-M2+M3+M6
 
-            //C11, C12, C21, C22 행렬의 합병
-            for(int i=0; i<n/2; i++)
-                for(int j=0; j<n/2; j++)
-                    C[i][j] = C11[i][j];
+        //C11, C12, C21, C22 행렬의 합병
+        for(int i=0; i<n/2; i++)
+            for(int j=0; j<n/2; j++)
+                C[i][j] = C11[i][j];
 
-            for(int i=0; i<n/2; i++)
-                for(int j=n/2; j<n; j++)
-                    C[i][j] = C12[i][j-n/2];
+        for(int i=0; i<n/2; i++)
+            for(int j=n/2; j<n; j++)
+                C[i][j] = C12[i][j-n/2];
 
-            for(int i=n/2; i<n; i++)
-                for(int j=0; j<n/2; j++)
-                    C[i][j] = C21[i-n/2][j];
+        for(int i=n/2; i<n; i++)
+            for(int j=0; j<n/2; j++)
+                C[i][j] = C21[i-n/2][j];
 
-            for(int i=n/2; i<n; i++)
-                for(int j=n/2; j<n; j++)
-                    C[i][j] = C22[i-n/2][j-n/2];
-        }
+        for(int i=n/2; i<n; i++)
+            for(int j=n/2; j<n; j++)
+                C[i][j] = C22[i-n/2][j-n/2];
     }
 ```
 
@@ -143,6 +141,52 @@ public class Strassen {
         C[1][1] = A[1][0]*B[0][1] + A[1][1]*B[1][1];
 
         return C;
+    }
+
+    public static int[][] sum(int[][] A, int[][] B, int n) {      //두 행렬을 더하는 메소드
+        int[][] C = new int[n][n];
+
+        for(int i=0; i<n; i++)
+            for(int j=0; j<n; j++)
+                C[i][j] = A[i][j] + B[i][j];      //C=A+B
+
+        return C;
+    }
+
+    public static int[][] sub(int[][] A, int[][] B, int n) {      //한 행렬에서 다른 한 행렬을 빼는 메소드
+        int[][] C = new int[n][n];
+
+        for(int i=0; i<n; i++)
+            for(int j=0; j<n; j++)
+                C[i][j] = A[i][j] - B[i][j];      //C=A-B
+
+        return C;
+    }
+
+    public static void merge(int[][] C, int n) {
+        int[][] C11, C12, C21, C22;
+
+        C11 = sum(sum(M1, M4, n/2), sub(M7, M5, n/2), n/2);    //C11=M1+M4-M5+M7
+        C12 = sum(M3, M5, n/2);                                      //C12=M3+M5
+        C21 = sum(M2, M4, n/2);                                      //C21=M2+M4
+        C22 = sum(sub(M1, M2, n/2), sum(M3, M6, n/2),n/2);     //C22=M1-M2+M3+M6
+
+        //C11, C12, C21, C22 행렬의 합병
+        for(int i=0; i<n/2; i++)
+            for(int j=0; j<n/2; j++)
+                C[i][j] = C11[i][j];
+
+        for(int i=0; i<n/2; i++)
+            for(int j=n/2; j<n; j++)
+                C[i][j] = C12[i][j-n/2];
+
+        for(int i=n/2; i<n; i++)
+            for(int j=0; j<n/2; j++)
+                C[i][j] = C21[i-n/2][j];
+
+        for(int i=n/2; i<n; i++)
+            for(int j=n/2; j<n; j++)
+                C[i][j] = C22[i-n/2][j-n/2];
     }
 
     public static int[][] strassen(int[][] A, int[][] B, int n) {
@@ -209,57 +253,11 @@ public class Strassen {
                 }
             }
             M7 = strassen(t1, t2, n/2);
+
+            merge(C, n);
         }
 
         return C;
-    }
-
-    public static int[][] sum(int[][] A, int[][] B, int n) {      //두 행렬을 더하는 메소드
-        int[][] C = new int[n][n];
-
-        for(int i=0; i<n; i++)
-            for(int j=0; j<n; j++)
-                C[i][j] = A[i][j] + B[i][j];      //C=A+B
-
-        return C;
-    }
-
-    public static int[][] sub(int[][] A, int[][] B, int n) {      //한 행렬에서 다른 한 행렬을 빼는 메소드
-        int[][] C = new int[n][n];
-
-        for(int i=0; i<n; i++)
-            for(int j=0; j<n; j++)
-                C[i][j] = A[i][j] - B[i][j];      //C=A-B
-
-        return C;
-    }
-
-    public static void merge(int[][] C, int n) {
-        if(n>2) {
-            int[][] C11, C12, C21, C22;
-
-            C11 = sum(sum(M1, M4, n/2), sub(M7, M5, n/2), n/2);    //C11=M1+M4-M5+M7
-            C12 = sum(M3, M5, n/2);                                      //C12=M3+M5
-            C21 = sum(M2, M4, n/2);                                      //C21=M2+M4
-            C22 = sum(sub(M1, M2, n/2), sum(M3, M6, n/2),n/2);     //C22=M1-M2+M3+M6
-
-            //C11, C12, C21, C22 행렬의 합병
-            for(int i=0; i<n/2; i++)
-                for(int j=0; j<n/2; j++)
-                    C[i][j] = C11[i][j];
-
-            for(int i=0; i<n/2; i++)
-                for(int j=n/2; j<n; j++)
-                    C[i][j] = C12[i][j-n/2];
-
-            for(int i=n/2; i<n; i++)
-                for(int j=0; j<n/2; j++)
-                    C[i][j] = C21[i-n/2][j];
-
-            for(int i=n/2; i<n; i++)
-                for(int j=n/2; j<n; j++)
-                    C[i][j] = C22[i-n/2][j-n/2];
-        }
     }
 
     public static void main(String[] args) {
@@ -285,7 +283,6 @@ public class Strassen {
 
         int[][] C;
         C = strassen(A, B, n);        //C=A×B
-        merge(C, n);
 
         for(int i=0; i<m; i++) {      //결과값 출력
             for(int j=0; j<m; j++) {
