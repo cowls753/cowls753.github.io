@@ -2,10 +2,11 @@
 
 대수적으로 행렬의 곱셈은 각각의 원소들을 곱해 더한 값으로 나타낸다.
 
-(사진 -A,B)
+![1](https://user-images.githubusercontent.com/80511210/116244312-c6fde280-a7a2-11eb-9f3e-2cc9f38e7313.png)
 두 행렬 **A**, **B**의 곱인 행렬 **C**는 다음과 같이 나타난다.
-(사진 -AxB=C)
-(사진 -C)
+![2](https://user-images.githubusercontent.com/80511210/116244315-c7967900-a7a2-11eb-8778-27e64fb49ff0.png)
+
+![3](https://user-images.githubusercontent.com/80511210/116244297-c402f200-a7a2-11eb-856d-9d0f6b392e9f.png)
 2×2 행렬의 곱을 구하기 위해서 총 8번의 곱셈과 4번의 덧셈이 수행되는 것을 알 수 있다.
 
 ------
@@ -15,13 +16,13 @@
 
 
 Strassen 알고리즘을 이용하여 두 행렬 **A**, **B**에 대하여 다음과 같이 표현할 수 있다.
-(사진 -M1~M7)
+![4](https://user-images.githubusercontent.com/80511210/116244304-c5ccb580-a7a2-11eb-9c1d-170d44044bcd.png)
 
 Strassen 알고리즘은 이전의 연산을 조금씩 바꾸어 총 7번의 곱셈과 18번의 덧셈, 뺄셈으로 수행되도록 한다.
 덧셈, 뺄셈 연산의 횟수를 늘리고 곱셈 연산의 횟수를 줄임으로써 시간복잡도를 감소시킨다.
 
 행렬 **M1**~**M7**은 다음과 같이 나타낼 수 있고, 이러한 방식으로 두 행렬 **A**, **B**의 곱인 **C**를 얻을 수 있다.
-(사진 -C11~C22)
+![5](https://user-images.githubusercontent.com/80511210/116244307-c6654c00-a7a2-11eb-8ddb-d5bd52c088c8.png)
 
 ------
 0. n×n 행렬에 대해 각 행렬을 ⁿ/₂으로 분할하기 때문에 2의 거듭제곱으로 나타낼 수 있는 수로 n을 증가시킨다. (빈자리는 0으로 채운다.) 
@@ -297,7 +298,7 @@ public class Strassen {
     }
 }
 ```
-(사진 -실행 결과)
+![6](https://user-images.githubusercontent.com/80511210/116244309-c6654c00-a7a2-11eb-89ad-930ac522c021.png)
 
 ------
 
