@@ -27,12 +27,12 @@ Strassen 알고리즘은 이전의 연산을 조금씩 바꾸어 총 7번의 곱
 ------
 0. n×n 행렬에 대해 각 행렬을 ⁿ/₂으로 분할하기 때문에 2의 거듭제곱으로 나타낼 수 있는 수로 n을 증가시킨다. (빈자리는 0으로 채운다.) 
 ``` java
-int m;
+        int m;
         m = scanner.nextInt();     //행렬의 크기
 
-        int n = m;
-        while(n != (n&-n))       //2의 거듭제곱으로 맞춰주기
-            n++;
+        size = m;
+        while(size != (size&-size))       //2의 거듭제곱으로 맞춰주기
+            size++;
 ```
 
 1. 2×2 행렬에 대해서는 기존의 방식으로 곱셈 연산을 수행하도록 한다.
@@ -62,6 +62,8 @@ else {        //2×2 행렬이 아닐 경우, 재귀적으로 행렬을 분할
                 }
             }
             M1 = strassen(t1, t2, n/2);
+            if(size/2==M1.length)
+                tM1 = M1;
 
             for(int i=0; i<n/2; i++) {     //M2
                 for(int j=0; j<n/2; j++) {
@@ -70,6 +72,8 @@ else {        //2×2 행렬이 아닐 경우, 재귀적으로 행렬을 분할
                 }
             }
             M2 = strassen(t1, t2, n/2);
+            if(size/2==M2.length)
+                tM2 = M2;
 ```
 
 3. 두  행렬을 더하거나 빼는 메소드를 정의한다.
@@ -97,30 +101,35 @@ public static int[][] sum(int[][] A, int[][] B, int n) {      //두 행렬을 �
 
 4. `sum`메소와 `sub`메소드를 이용해 **M1**~**M7**로부터 **C₁,₁**, **C₁,₂**, **C₂,₁**, **C₂,₂**을 얻고 이를 합쳐 두 행렬의 곱 **C**를 구한다.
 ``` java
-public static void merge(int[][] C, int n) {
-        int[][] C11, C12, C21, C22;
+static int[][] C11, C12, C21, C22;
+    public static int[][] merge(int n) {
+        int[][] C = new int[n][n];
 
-        C11 = sum(sum(M1, M4, n/2), sub(M7, M5, n/2), n/2);    //C11=M1+M4-M5+M7
-        C12 = sum(M3, M5, n/2);                                      //C12=M3+M5
-        C21 = sum(M2, M4, n/2);                                      //C21=M2+M4
-        C22 = sum(sub(M1, M2, n/2), sum(M3, M6, n/2),n/2);     //C22=M1-M2+M3+M6
+        if(M1.length == n/2) {
+            C11 = sum(sum(M1, M4, n/2), sub(M7, M5, n/2), n/2);    //C11=M1+M4-M5+M7
+            C12 = sum(M3, M5, n/2);                                      //C12=M3+M5
+            C21 = sum(M2, M4, n/2);                                      //C21=M2+M4
+            C22 = sum(sub(M1, M2, n/2), sum(M3, M6, n/2),n/2);     //C22=M1-M2+M3+M6
 
-        //C11, C12, C21, C22 행렬의 합병
-        for(int i=0; i<n/2; i++)
-            for(int j=0; j<n/2; j++)
-                C[i][j] = C11[i][j];
+            //C11, C12, C21, C22 행렬의 합병
+            for(int i=0; i<n/2; i++)
+                for(int j=0; j<n/2; j++)
+                    C[i][j] = C11[i][j];
 
-        for(int i=0; i<n/2; i++)
-            for(int j=n/2; j<n; j++)
-                C[i][j] = C12[i][j-n/2];
+            for(int i=0; i<n/2; i++)
+                for(int j=n/2; j<n; j++)
+                    C[i][j] = C12[i][j-n/2];
 
-        for(int i=n/2; i<n; i++)
-            for(int j=0; j<n/2; j++)
-                C[i][j] = C21[i-n/2][j];
+            for(int i=n/2; i<n; i++)
+                for(int j=0; j<n/2; j++)
+                    C[i][j] = C21[i-n/2][j];
 
-        for(int i=n/2; i<n; i++)
-            for(int j=n/2; j<n; j++)
-                C[i][j] = C22[i-n/2][j-n/2];
+            for(int i=n/2; i<n; i++)
+                for(int j=n/2; j<n; j++)
+                    C[i][j] = C22[i-n/2][j-n/2];
+        }
+
+        return C;
     }
 ```
 
@@ -131,6 +140,8 @@ import java.util.Scanner;
 
 public class Strassen {
     static int[][] M1, M2, M3, M4, M5, M6, M7;
+    static int[][] tM1, tM2, tM3, tM4, tM5, tM6, tM7;
+    static int size;
 
     public static int[][] multiply(int[][] A, int[][] B) {      //2×2 행렬의 곱셈
         int[][] C = new int[2][2];
@@ -163,13 +174,13 @@ public class Strassen {
         return C;
     }
 
-    public static void merge(int[][] C, int n) {
-        int[][] C11, C12, C21, C22;
+    public static int[][] mergeresult(int n) {
+        int[][] C = new int[n][n];
 
-        C11 = sum(sum(M1, M4, n/2), sub(M7, M5, n/2), n/2);    //C11=M1+M4-M5+M7
-        C12 = sum(M3, M5, n/2);                                      //C12=M3+M5
-        C21 = sum(M2, M4, n/2);                                      //C21=M2+M4
-        C22 = sum(sub(M1, M2, n/2), sum(M3, M6, n/2),n/2);     //C22=M1-M2+M3+M6
+        C11 = sum(sum(tM1, tM4, n/2), sub(tM7, tM5, n/2), n/2);    //C11=M1+M4-M5+M7
+        C12 = sum(tM3, tM5, n/2);                                      //C12=M3+M5
+        C21 = sum(tM2, tM4, n/2);                                      //C21=M2+M4
+        C22 = sum(sub(tM1, tM2, n/2), sum(tM3, tM6, n/2),n/2);     //C22=M1-M2+M3+M6
 
         //C11, C12, C21, C22 행렬의 합병
         for(int i=0; i<n/2; i++)
@@ -187,10 +198,43 @@ public class Strassen {
         for(int i=n/2; i<n; i++)
             for(int j=n/2; j<n; j++)
                 C[i][j] = C22[i-n/2][j-n/2];
+
+        return C;
+    }
+
+    static int[][] C11, C12, C21, C22;
+    public static int[][] merge(int n) {
+        int[][] C = new int[n][n];
+
+        if(M1.length == n/2) {
+            C11 = sum(sum(M1, M4, n/2), sub(M7, M5, n/2), n/2);    //C11=M1+M4-M5+M7
+            C12 = sum(M3, M5, n/2);                                      //C12=M3+M5
+            C21 = sum(M2, M4, n/2);                                      //C21=M2+M4
+            C22 = sum(sub(M1, M2, n/2), sum(M3, M6, n/2),n/2);     //C22=M1-M2+M3+M6
+
+            //C11, C12, C21, C22 행렬의 합병
+            for(int i=0; i<n/2; i++)
+                for(int j=0; j<n/2; j++)
+                    C[i][j] = C11[i][j];
+
+            for(int i=0; i<n/2; i++)
+                for(int j=n/2; j<n; j++)
+                    C[i][j] = C12[i][j-n/2];
+
+            for(int i=n/2; i<n; i++)
+                for(int j=0; j<n/2; j++)
+                    C[i][j] = C21[i-n/2][j];
+
+            for(int i=n/2; i<n; i++)
+                for(int j=n/2; j<n; j++)
+                    C[i][j] = C22[i-n/2][j-n/2];
+        }
+
+        return C;
     }
 
     public static int[][] strassen(int[][] A, int[][] B, int n) {
-        int[][] C = new int[n][n];
+        int[][] C;
 
         if(n==2)      //2×2 행렬일 경우
             C = multiply(A, B);
@@ -205,6 +249,8 @@ public class Strassen {
                 }
             }
             M1 = strassen(t1, t2, n/2);
+            if(size/2==M1.length)
+                tM1 = M1;
 
             for(int i=0; i<n/2; i++) {     //M2
                 for(int j=0; j<n/2; j++) {
@@ -213,6 +259,8 @@ public class Strassen {
                 }
             }
             M2 = strassen(t1, t2, n/2);
+            if(size/2==M2.length)
+                tM2 = M2;
 
             for(int i=0; i<n/2; i++) {     //M3
                 for(int j=0; j<n/2; j++) {
@@ -221,6 +269,8 @@ public class Strassen {
                 }
             }
             M3 = strassen(t1, t2, n/2);
+            if(size/2==M3.length)
+                tM3 = M3;
 
             for(int i=0; i<n/2; i++) {     //M4
                 for(int j=0; j<n/2; j++) {
@@ -229,6 +279,8 @@ public class Strassen {
                 }
             }
             M4 = strassen(t1, t2, n/2);
+            if(size/2==M4.length)
+                tM4 = M4;
 
             for(int i=0; i<n/2; i++) {     //M5
                 for(int j=0; j<n/2; j++) {
@@ -237,6 +289,8 @@ public class Strassen {
                 }
             }
             M5 = strassen(t1, t2, n/2);
+            if(size/2==M5.length)
+                tM5 = M5;
 
             for(int i=0; i<n/2; i++) {     //M6
                 for(int j=0; j<n/2; j++) {
@@ -245,6 +299,8 @@ public class Strassen {
                 }
             }
             M6 = strassen(t1, t2, n/2);
+            if(size/2==M6.length)
+                tM6 = M6;
 
             for(int i=0; i<n/2; i++) {     //M7
                 for(int j=0; j<n/2; j++) {
@@ -253,8 +309,10 @@ public class Strassen {
                 }
             }
             M7 = strassen(t1, t2, n/2);
+            if(size/2==M7.length)
+                tM7 = M7;
 
-            merge(C, n);
+            C = merge(n);
         }
 
         return C;
@@ -266,12 +324,12 @@ public class Strassen {
         int m;
         m = scanner.nextInt();     //행렬의 크기
 
-        int n = m;
-        while(n != (n&-n))       //2의 거듭제곱으로 맞춰주기
-            n++;
+        size = m;
+        while(size != (size&-size))       //2의 거듭제곱으로 맞춰주기
+            size++;
 
-        int[][] A = new int[n][n];
-        int[][] B = new int[n][n];
+        int[][] A = new int[size][size];
+        int[][] B = new int[size][size];
 
         for(int i=0; i<m; i++)         //A행렬
             for (int j=0; j<m; j++)
@@ -282,7 +340,10 @@ public class Strassen {
                 B[i][j] = scanner.nextInt();
 
         int[][] C;
-        C = strassen(A, B, n);        //C=A×B
+        C = strassen(A, B, size);     //C=A×B
+
+        if(size != 2)
+            C = mergeresult(size);
 
         for(int i=0; i<m; i++) {      //결과값 출력
             for(int j=0; j<m; j++) {
@@ -346,14 +407,16 @@ public class MatrixMultiplication {
     }
 }
 ```
-위와 같은 기존적인 행렬 곱셈 알고리즘과 Strassen 알고리즘을 비교해보았다.
+위와 같은 기존적인 행렬 곱셈 알고리즘과 Strassen 알고리즘을 비교해보았다.     
 
-(사진 -그래프)
-(그래프 설명)
+![7](https://user-images.githubusercontent.com/80511210/116397831-09d2bf80-a862-11eb-950f-0f97d7a23196.png)    
+알고리즘의 시간복잡도에 대해서 MatrixMultiplication은 *n³*의 시간복잡도를 갖는 반면 Strassen은 *n²∙⁸⁰⁷*의 시간복잡도를 갖는다.
+Strassen 알고리즘을 사용했을 때 수행시간이 줄어든다는 것을 확인할 수 있다.
+미세한 차이지만 이는 수행해야 할 행렬의 크기 즉, *n*의 값이 커질수록 확연한 차이를 나타낸다.   
 
 ------
 
 ## Error
 
 구현한 Strassen 알고리즘은 미완성된 알고리즘으로, 이는 크기가 큰 배열의 곱셈에 대해서는 정상적으로 결과값을 구하지 못한다.
-2×2, 3×3, 4×4 행렬의 곱셈에 대해서만 가능하며, 이를 보완하기 위한 부분적인 코드 수정이 필요하다.
+크기가 8이하인 행렬의 곱셈에 대해서만 가능하며, 이를 보완하기 위한 부분적인 코드 수정이 필요하다.
