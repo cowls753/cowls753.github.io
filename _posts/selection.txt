@@ -1,0 +1,40 @@
+import java.util.Scanner;
+
+public class SelectionSort {
+    static int[] selectionsort(int[] a, int n) {
+        int temp;
+
+        for(int i=0; i<n-1; i++) {
+            int min = i;
+            for(int j=i; j<n; j++)
+                if(a[min]>a[j])
+                    min = j;
+
+            temp = a[min];
+            a[min] = a[i];
+            a[i] = temp;
+        }
+
+        return a;
+    }
+
+    static public void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n;
+        n = scanner.nextInt();
+
+        int[] a = new int[n];
+
+        for(int i=0; i<n; i++)
+            a[i] = scanner.nextInt();
+
+        a = selectionsort(a,n);
+
+        for(int i=0; i<n; i++)
+            System.out.print(a[i] + " ");
+
+
+        scanner.close();
+    }
+}

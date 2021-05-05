@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class ShellSort {
+    static public void insertionsort(int[] a, int n, int g, int start) {
+        int current;
+
+        for(int i=start+g; i<n; i+=g) {
+            current = a[i];
+            int j;
+            for(j=i-g; j>=0; j-=g) {
+                if(a[j]>current) {
+                    a[j+g] = a[j];
+                }
+                else
+                    break;
+            }
+            a[j+g] = current;
+        }
+    }
+
+    static public void shellsort(int[] a, int n) {
+        int g1 = 5, g2 = 3;
+
+        for(int i=0; i<g1; i++)
+            insertionsort(a, n, g1, i);
+
+        for(int i=0; i<g2; i++)
+            insertionsort(a, n, g2, i);
+
+        insertionsort(a, n, 1, 0);
+    }
+
+    static public void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n;
+        n = scanner.nextInt();
+
+        int[] a = new int[n];
+
+        for(int i=0; i<n; i++)
+            a[i] = scanner.nextInt();
+
+        shellsort(a,n);
+
+        for(int i=0; i<n; i++)
+            System.out.print(a[i] + " ");
+
+
+        scanner.close();
+    }
+}
