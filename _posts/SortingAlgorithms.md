@@ -45,6 +45,7 @@ public class BubbleSort {
 ## Performance Evaluation
 > BubbleSort의 시간복잡도는 *n*(*n*-1)/2 × O(1) = O(*n*2) × O(1) = O(*n*2) 이다.
 
+![그림1](https://user-images.githubusercontent.com/80511210/117136758-c76e2d00-ade3-11eb-8426-59da29bd3ffa.png)
 
 ## 2. Selection Sort     
 + 입력 배열 전체에서 최솟값을 '선택'하여 배열의 0번 원소와 자리를 바꾸고, 다음엔 0번 원소를 제외한 나머지 원소에서 최솟값을 선택하여 배열의 1번 원소와 자리를 바꾼다.
@@ -94,6 +95,7 @@ public class SelectionSort {
 ## Performance Evaluation
 > SelectionSort의 시간복잡도는 *n*(*n*-1)/2 × O(1) = O(*n*2) × O(1) = O(*n*2) 이다.
 
+![그림2](https://user-images.githubusercontent.com/80511210/117136763-c89f5a00-ade3-11eb-88f2-e902758ec87d.png)
 
 ## 3. Insertion Sort     
 + 배열을 정렬된 부분(앞부분)과 정렬되지 않은 부분(뒷부분)으로 나누고, 정렬되지 않은 부분의 가장 왼쪽 원소를 정렬된 부분의 적절한 위치에 삽입하여 정렬하는 과정을 반복한다.     
@@ -143,6 +145,7 @@ public class InsertionSort {
 ## Performance Evaluation
 > InsertionSort의 시간복잡도는 *n*(*n*-1)/2 × O(1) = O(*n*2) × O(1) = O(*n*2) 이다.
 
+![그림3](https://user-images.githubusercontent.com/80511210/117136764-c937f080-ade3-11eb-986a-205cb0acca9e.png)
 
 ## 4. Shell Sort     
 + BubbleSort와 InsertionSort의 단점을 보완하기 위해 InsertionSort를 이용하여 배열 뒷부분의 작은 숫자를 앞부분으로 '빠르게' 이동시키고, 동시에 앞부분의 큰 숫자는 뒷부분으로 이동시키고, 가장 마지막에는 InsertionSort를 수행하는 알고리즘.        
@@ -204,3 +207,5 @@ public class ShellSort {
      
 ## Performance Evaluation
 > ShellSort의 시간복잡도는 간격 선정에 따라 좌우되며, 최악의 경우 O(*n*2) 이다.
+
+![그림4](https://user-images.githubusercontent.com/80511210/117136766-c937f080-ade3-11eb-9678-094c81caff6c.png)
