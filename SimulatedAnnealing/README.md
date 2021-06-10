@@ -10,7 +10,7 @@
 그러나, 온도가 점차 낮아지며 분자의 움직임이 줄어드는 것과 같이 해 탐색 과정 또한 
 점차 규칙적인 방식으로 이루어진다.     
 
-![KakaoTalk_20210610_152109505](https://user-images.githubusercontent.com/80511210/121474876-a8287800-c9ff-11eb-9d58-ffefbe0a5227.jpg)
+![KakaoTalk_20210610_152109505](https://user-images.githubusercontent.com/80511210/121558366-98854f80-ca50-11eb-93e2-03f9b839430c.jpg)
      
      
 모의 담금질 기법의 특징은 확률개념을 도입하여 현재 해의 이웃해 중에서 보다 **나쁜 
@@ -75,7 +75,7 @@ for (int i=0; i<niter; i++) {
      
 parameter 추정을 진행하기 위해 선정한 데이터는 월별 평균 기온 데이터이다.     
 ![제목 없음](https://user-images.githubusercontent.com/80511210/121530150-1721c300-ca38-11eb-8884-4169deb6e6b0.png)
-![그래프](https://user-images.githubusercontent.com/80511210/121530164-1be67700-ca38-11eb-98ad-436b419ee8f8.jpg)     
+![그래프](https://user-images.githubusercontent.com/80511210/121558009-3c223000-ca50-11eb-8fdc-b14acca87315.jpg)     
 1월부터 12월까지의 평균 기온 데이터와 이 데이터의 분포를 나타낸 그래프이다.     
      
      
@@ -98,7 +98,7 @@ parameter 추정을 진행하기 위해 선정한 데이터는 월별 평균 기
 
 ## Performance Analysis
      
-![비교그래프](https://user-images.githubusercontent.com/80511210/121551118-52c58880-ca4a-11eb-86e2-1bd371b8dbb9.jpg)    
+![비교그래프](https://user-images.githubusercontent.com/80511210/121558032-3fb5b700-ca50-11eb-8056-a1bfc33df17c.jpg)    
 월별 평균 기온 데이터를 나타낸 그래프에 parameter 추정을 진행한 2차 함수 값의 분포를 
 함께 나타내었다.    
 
